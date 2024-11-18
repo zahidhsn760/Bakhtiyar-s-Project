@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Admin Panel{% endblock %}
+
+{% block content %}
+    <!-- ========================= Main ==================== -->
+    <div class="main">
+        <div class="topbar">
+            <div class="toggle">
+                <ion-icon name="menu-outline"></ion-icon>
+            </div>
+        </div>
+
+        <div class="details">
+            <form method="get" action="">
+                <div class="date-filter">
+                    <!-- Date Filter -->
+                    <div>
+                        <label for="date">Filter by Date:</label>
+                        <input type="date" id="date" name="date" value="{{ request.GET.date }}" style="padding: 5px; border-radius: 4px; border: 1px solid #ccc;">
+                    </div>
+            
+                    <!-- State Filter -->
+                    <div>
+                        <label for="state">Filter by State:</label>
+                        <select id="state" name="state" style="padding: 5px; border-radius: 4px; border: 1px solid #ccc;">
+                            <option value="">All States</option>
+                            {% for state in states %}
+                                <option value="{{ state }}" {% if request.GET.state == state %}selected{% endif %}>{{ state }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+            
+                    <!-- Submit Button -->
+                    <div class="filter-btn">
+                        <button type="submit" class="filt-button">Filter</button>
+                    </div>
+                </div>
+            </form>
+            
+            
+            {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+            <div class="recentOrders">
+                <div class="cardHeader">
+                    <h2>Client Orders</h2>
+                </div>
+                {% if clients %}
+                <table>
+                    <thead>
+                        <tr>
+                            <td>Name</td>
+                            <td>Email</td>
+                            <td>Phone No</td>
+                            <td>Address</td>
+                            <td>State</td>
+                            <td>Date Requested</td>
+                            <td>Is Signed</td>
+                            <td>Actions</td>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for client in clients %}
+                        {% with client.get_delivery_address as address %}
+
+                        <tr>
+                            <td>{{ client.First_Name }} {{ client.Last_Name }}</td>
+                        <td>{{ client.Email }}</td>
+                        <td>{{ client.phone_number }}</td>
+                        <td>{{ client.Address }}</td>
+                        
+                        <td>{{ address.country }}</td>
+                        <td>{{ client.latest_request_date }}</td>
+                        <td>
+                            {% if client.is_signed %}
+                                <i class="fa fa-check" style="color: green;"></i>
+                            {% else %}
+                                <i class="fa fa-times" style="color: red;"></i>
+                            {% endif %}
+                        </td>
+                            <td>
+                                {% if client.is_signed %}
+                                <a href="{% url 'agreement' client.id %} " id="agree">
+                                    <i class="fa-solid fa-file-contract"></i>
+                                </a>  |
+                                {% endif %}
+                                <a href="{% url 'welcome' client.id %}" class="welcome-link"  style="color: green;">
+                                    <i class="fa-solid fa-link"></i> 
+                                </a> |
+                                <a href="{% url 'client_details'  client.id%}" class="eye"><i class="fa-regular fa-eye"></i></a> |
+                                <a href="#" class="delete-btn" data-client-id="{{ client.id }}" data-client-name="{{ client.name }}">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </a>
+                                
+                                
+                            </td>
+                        </tr>
+                        {% endwith %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p style="text-align: center;">No records found.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div id="deleteModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h2>Confirm Delete</h2>
+            <p>Are you sure you want to delete <span id="clientName"></span>?</p>
+        </div>
+        <div class="modal-actions">
+            <form id="deleteForm" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn-confirm-delete">Yes, Delete</button>
+                <button type="button" class="btn-cancel-delete" onclick="closeModal()">Cancel</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+{% block custome_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('Document loaded');
+    
+        document.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default link behavior
+    
+                const clientId = this.getAttribute('data-client-id');
+                const clientName = this.getAttribute('data-client-name');
+    
+                console.log(`Delete button clicked for client ID: ${clientId}, Name: ${clientName}`);
+    
+                // Set the client name in the modal
+                document.getElementById('clientName').textContent = clientName;
+    
+                // Set the form action for the client to be deleted
+                const form = document.getElementById('deleteForm');
+                form.action = `/delete-client/${clientId}/`;
+    
+                // Show the modal
+                document.getElementById('deleteModal').style.display = 'block';
+            });
+        });
+    });
+    
+    function closeModal() {
+        document.getElementById('deleteModal').style.display = 'none';
+    }
+    
+</script>
+{% endblock  %}

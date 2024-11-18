@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Add New Product{% endblock %}
+
+{% block content %}
+    <div class="main">
+        <div class="topbar">
+            <div class="toggle">
+                <ion-icon name="menu-outline"></ion-icon>
+            </div>
+            <div class="product-container">
+                <h1>Add New Product</h1>
+                {% if error %}
+                <div class="alert alert-danger">
+                    {{ error }}
+                </div>
+                {% endif %}
+
+                <form action="{% url 'add_product' %}" id="product-form" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="product-name">Product Name:</label>
+                        <input type="text" id="product-name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="section">Section:</label>
+                        <select id="section" name="section" required onchange="updateSubsections()">
+                            <option value="">Select Section</option>
+                            {% for section_value, section_name in sections %}
+                                <option value="{{ section_value }}">{{ section_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="subsection">Subsection:</label>
+                        <select id="subsection" name="subsection" required>
+                            <option value="">Select Subsection</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="size-field" style="display: none;">
+                        <label for="size">Size:</label>
+                        <select id="size" name="size">
+                            <option value="">Select Size</option>
+                            <option value="20ft">20ft</option>
+                            <option value="30ft">30ft</option>
+                            <option value="40ft">40ft</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-price">Price:</label>
+                        <input type="text" id="product-price" name="price" required>
+                    </div>
+                   
+                   
+                 
+                    <div class="form-group">
+                        <label for="product-image">Image:</label>
+                        <input type="file" name="image" class="custom-file-input" id="product-image" required>
+                        <label class="custom-file-label" for="product-image">Choose file</label>
+                    </div>
+                
+                    <div class="form-group">
+                        <label for="product-description">Description:</label>
+                        <textarea name="description" id="product-description" rows="4" required></textarea>
+                    </div>
+                
+                    <button type="submit" id="add-product">Add Product</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block custome_js %}
+<script>
+   
+        const subsections = {{ subsections|safe }};
+    
+        function updateSubsections() {
+            const sectionSelect = document.getElementById('section');
+            const subsectionSelect = document.getElementById('subsection');
+            const selectedSection = sectionSelect.value;
+            const sizeField = document.getElementById('size-field');
+    
+            // Clear existing options in subsection dropdown
+            subsectionSelect.innerHTML = '<option value="">Select Subsection</option>';
+    
+            // Show or hide subsection based on the selected section
+            if (selectedSection === 'Veranda') {
+                subsectionSelect.style.display = 'none';  // Hide subsection dropdown
+                subsectionSelect.removeAttribute('required');  // Remove required attribute
+            } else {
+                subsectionSelect.style.display = 'block';  // Show subsection dropdown
+                subsectionSelect.setAttribute('required', true);  // Add required attribute back
+    
+                // Populate subsections based on the selected section
+                if (subsections[selectedSection]) {
+                    subsections[selectedSection].forEach(subsection => {
+                        const option = document.createElement('option');
+                        option.value = subsection[0];  // Use the subsection key
+                        option.textContent = subsection[1];  // Use the subsection name
+                        subsectionSelect.appendChild(option);
+                    });
+                }
+            }
+    
+            // Show size field for Roof section, hide it for other sections
+            if (selectedSection === 'Roof') {
+                sizeField.style.display = 'block';  // Show size field
+            } else {
+                sizeField.style.display = 'none';  // Hide size field
+            }
+        }
+    
+        // Add event listener for section select change
+        document.getElementById('section').addEventListener('change', updateSubsections);
+    
+        // Handle file input label update
+        document.querySelector('#product').addEventListener('change', function (e) {
+            var fileName = e.target.files[0].name;
+            var nextSibling = e.target.nextElementSibling;
+            nextSibling.innerText = fileName;
+        });
+    
+        // Initial call to set subsection visibility and size field
+        updateSubsections();
+  
+    
+</script>
+
+    <!-- ====== ionicons ======= -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+{% endblock %}

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expanders Quote Request</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+   
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            /* background-color: #f4f4f4; */
+        }
+        .email-container {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.email-header {
+    padding: 0 20px;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.logo {
+    max-width: 150px;
+    height: auto;
+}
+
+.email-content {
+    padding: 0 16px;
+}
+
+.quote-box {
+    border: 1px solid #eaeaea;
+    border-radius: 5px;
+    padding: 25px;
+    margin-bottom: 30px;
+}
+
+h2 {
+    margin-top: 0;
+    color: #333;
+    font-size: 20px;
+}
+
+p {
+    margin-bottom: 15px;
+    color: #555;
+}
+
+ .cta-button {
+    display: inline-block;
+    background-color: #282827;
+    color: #fff;
+    padding: 12px 24px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    background-color: #eee;
+    border-top: 1px solid #eaeaea;
+}
+
+.profile-info {
+    padding: 15px;
+}
+
+.profile-image-container {
+    display: flex;
+    margin-right: 20px;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-end
+}
+
+.profile-image-container h2 {
+    font-size: 23px;
+    color: #f8e61e;
+    padding-top: 15px;
+}
+
+.profile-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    padding: 0 20px;
+}
+
+.profile-image {
+    margin-bottom: 10px; /* Add space between the images if needed */
+}
+
+.profile-info h3 {
+    margin: 0;
+    color: #333;
+}
+
+.profile-info p {
+    font-size: 10px;
+}
+
+.profile-info a {
+    color: #000;
+    text-decoration: none;
+}
+
+.profile-info p i {
+    padding: 0 10px;
+    font-size: 16px;
+}
+
+.email_footer {
+    font-size: 12px;
+    color: #888;
+    padding: 20px;
+    border-top: 1px solid #eaeaea;
+    text-align: justify;
+}
+
+.lines {
+    width: 3px;
+    height: 200px;
+    background-color: #f8e61e;
+    margin-right: 20px;
+}
+
+@media (max-width: 768px) {
+    .profile {
+        flex-direction: column; /* Stack vertically on smaller screens */
+        align-items: center; /* Center the content */
+    }
+
+    .profile-image-container {
+        margin-bottom: 20px; /* Add spacing below the image container */
+        align-items: center;
+        flex-direction: column; /* Keep image and text centered */
+    }
+
+    .profile-image {
+        margin: 0 auto; /* Center the image */
+    }
+
+    .profile-info {
+        text-align: center; /* Center the profile information */
+        padding-top: 0; /* Remove additional padding on smaller screens */
+    }
+
+    .lines {
+        height: 15vh; /* Decrease height for smaller screens */
+        margin: 20px 0; /* Adjust margin for better spacing */
+        display: none; /* Hide the line on smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-info p, .profile-info h3 {
+        font-size: 12px; /* Adjust font size for very small screens */
+    }
+
+    .cta-button {
+        width: 100%; /* Make button full-width on small screens */
+        padding: 10px; /* Adjust button padding */
+    }
+}
+
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="email-header">
+            <img src="https://qoute.elitenest.co/EliteNest1/static/Images/Small_Full_Logo.png" alt="EliteNest Logo" class="logo">
+        </div>
+        <div class="email-content">
+            <div class="quote-box">
+                <h2>Dear {{ client_name }},</h2>
+                <p>Thank you for choosing ELITE NEST for your tiny home! below is a copy of your signed agreement for your records.</p>
+                <p>One of our representatives will be reaching out to you shortly to confirm your order details, guide you through the deposit process, and provide next steps as we begin production on your home.</p>
+                <p>If you have any questions in the meantime, feel free to contact us.</p>
+                <p>We look forward to creating your new space!</p>
+              <a href="{{ agreement_url }}" style="display: inline-block; background-color: #282827; color: #fff; padding: 12px 24px; text-decoration: none; font-weight: bold; border-radius: 4px; text-align: center;">
+    VIEW YOUR QUOTE + AGREEMENT
+</a>
+
+            </div>
+        </div>
+        <div class="profile">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+            <td align="center" style="width: 30%;">
+                <img src="https://qoute.elitenest.co/EliteNest1/static/Images/HasanReady2.png" alt="Khan" width="100">
+                <br><br><br>
+                <img src="https://qoute.elitenest.co/EliteNest1/static/Images/Small_Half_Logo.png" alt="Elite Nest Logo" width="124" height="15">
+            </td>
+            <td align="left" style="width: 3px; background-color: #f8e61e; height: 200px;"></td>
+            <td align="left" style="padding: 0 15px;">
+                <h3>Khan</h3>
+                <p>Sales Manager at EliteNest</p>
+                <p>✉ <a href="mailto:info@elitenest.co">info@elitenest.co</a></p>
+                <p>📱 5129617126</p>
+                <p>📍 5900 Balcones Drive STE 6320 Austin, TX 78731</p>
+                <p>🔗 <a href="https://elitenest.co">elitenest.co</a></p>
+            </td>
+        </tr>
+    </table>
+</div>
+
+        <div class="email_footer">
+            <p>The content of this email is confidential and intended for the recipient specified in message only. It is strictly forbidden to share any part of this message with any third party, without a written consent of the sender. If you received this message by mistake, please reply to this message and follow with its deletion, so that we can ensure such a mistake does not occur in the future.</p>
+        </div>
+    </div>
+</body>
+</html>

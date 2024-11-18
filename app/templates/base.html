@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Admin Dashboard{% endblock %}</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+           
+        {% load static %}
+        <link rel="stylesheet" href="/EliteNest1/static/css/admin.css">
+ <link rel="icon"  type="image/png" href="/EliteNest1/static/Images/icon.jpg">
+        <style>
+            .modal {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        #deleteForm
+        {
+            display: flex;
+    align-items: center;
+    justify-content: center;
+
+        }
+            .modal-content {
+                background: white;
+                padding: 20px;
+                border-radius: 8px;
+                text-align: center;
+            }
+        
+            .modal-actions {
+                margin-top: 20px;
+            }
+        
+            .modal-actions button {
+                padding: 10px 20px;
+                margin: 5px;
+            }
+        
+            .btn-confirm-delete {
+                background-color: red;
+                color: white;
+            }
+        
+            .btn-cancel-delete {
+                background-color: green;
+                color: white;
+            }
+        </style>
+        
+    </head>
+<body>
+    <div class="container">
+        <div class="navigation">
+            <ul>
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="cog-outline"></ion-icon>        
+                                    </span>
+                        <span class="title">Elite Nest Admin</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="{% url 'view_client_requests' %}">
+                        <span class="icon">
+                            <ion-icon name="people-outline"></ion-icon>
+                        </span>
+                        <span class="title">Clients</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'product_list' %}">
+                        <span class="icon">
+                            <ion-icon name="cart-outline"></ion-icon>
+                        </span>
+                        <span class="title">Products</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'logout_admin' %}">
+                        <span class="icon">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                        </span>
+                        <span class="title">Log Out</span>
+                    </a>
+                    
+                </li>
+            </ul>
+
+        </div>
+
+        {% block content %}
+        <!-- Content will be injected here from child templates -->
+        {% endblock %}
+    </div>
+
+    {% block custome_js %}
+    <script>
+        let list = document.querySelectorAll(".navigation li");
+
+        function activeLink() {
+            list.forEach((item) => {
+                item.classList.remove("hovered");
+            });
+            this.classList.add("hovered");
+        }
+
+        list.forEach((item) => item.addEventListener("mouseover", activeLink));
+
+        // Menu Toggle
+        let toggle = document.querySelector(".toggle");
+        let navigation = document.querySelector(".navigation");
+        let main = document.querySelector(".main");
+
+        toggle.onclick = function () {
+            navigation.classList.toggle("active");
+            main.classList.toggle("active");
+        };
+    </script>
+
+    <!-- ====== ionicons ======= -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    {% endblock %}
+</body>
+</html>

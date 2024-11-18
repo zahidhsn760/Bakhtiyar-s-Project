@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request a Quote</title>
+    <link rel="stylesheet" href="/EliteNest1/static/css/Bakt-Style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css"/>
+</head>
+<body>
+
+    <!-- Header Section with Navbar on Banner -->
+    <header>
+        
+          <nav>
+            <div class="logo">
+                <a href="https://elitenest.co">
+                <img src="/EliteNest1/static/Images/Logo-white.svg" alt="Logo">
+                    </a>
+            </div>
+
+            <a href="#" class="menu-icon"><i class="fa-solid fa-bars"></i></a>
+            
+            <ul class="nav-links" id="nav-links">
+                <li class="dropdown">
+                    <a href="#">Our Range</a>
+                    <ul class="dropdown-menu">
+                        <li><a href=" https://elitenest.co/20-ft-premium-house/ ">20ft Premium House</a></li>
+                        <li><a href="https://elitenest.co/30-ft-premium-house/ ">30ft Premium House</a></li>
+                        <li><a href=" https://elitenest.co/40-ft-premium-house/ ">40ft Premium House</a></li>
+                    </ul>
+                </li>
+                <li><a href="https://elitenest.co/about-us/">About Us</a></li>
+                <li><a href="https://elitenest.co/gallery/">Gallery</a></li>
+                <li><a href="https://elitenest.co/ready-now/">Ready Now</a></li>
+                <li><a href="https://elitenest.co/faqs/">FAQs</a></li>
+                <li><a href="https://elitenest.co/blog/">Blogs</a></li>
+                <li><a href="https://elitenest.co/book-appointment/">Book Viewing</a></li>
+                <li><a href="https://elitenest.co/contact-us/">Contact Us</a></li>
+
+            </ul>
+                            <a href="#" class="get-quote-btn">GET QUOTE ></a>
+
+
+            <a href="#" class="close-icon"><i class="fas fa-times"></i></a>
+
+        </nav>
+      
+    </header>
+    <section class="banner">
+         <div class="text-b">
+        <div class="banner-text">
+            <h1>REQUEST A QUOTE</h1>
+            
+        </div>
+    </div>
+</section>
+    
+
+
+   <!-- Form Card Section -->'
+    '
+   <div class="quote-form-container">
+    <div class="form-text">
+        <h1 style="color: black;">ELITE NEST Quote Foam</h1>
+        <p style="color: black;">Fill out the foam to get your quotes.</p>
+    </div>
+   <form class="quote-form" method="post" action="{% url 'first_page' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="first-name">First Name *</label>
+            <input type="text" id="first-name" name="First_Name" required>
+        </div>
+        <div class="form-group">
+            <label for="last-name">Last Name *</label>
+            <input type="text" id="last-name" name="Last_Name" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="Email" required>
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone *</label>
+            <input type="phone" id="phone" name="phone_number" required>
+        </div>
+        <div class="form-group full-width">
+            <label for="address">Address *</label>
+            <input type="text" id="address" name="Address" required>
+        </div>
+        <div class="form-group full-width">
+            <label for="city-state-zip">City, State, Zip Code *</label>
+            <input type="text" id="city-state-zip" name="city-state-zip" required>
+        </div>
+        <!-- <div class="form-group full-width">
+            <label for="quote-for">Requesting Quotes For *</label>
+            <div class="radio-group">
+                <input type="radio" id="20ft" name="quote-for" value="20ft">
+                <label for="20ft">20FT Nest</label><br>
+                <input type="radio" id="30ft" name="quote-for" value="30ft">
+                <label for="30ft">30FT Nest</label><br>
+                <input type="radio" id="40ft" name="quote-for" value="40ft">
+                <label for="40ft">40FT Nest</label>
+            </div>
+        </div> -->
+        <div class="form-group full-width">
+            <label for="message">Message</label>
+            <textarea id="message" name="message"></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Request Quote</button>
+    </form>
+</div>
+
+<!-- Footer section  -->
+
+<footer>
+<div class="footer-banner">
+    <div class="overlay"></div>
+ <div class="footer-content">
+        <div class="footer-banner-text">
+        <h2>REGISTER YOUR INTEREST & DOWNLOAD OUR BROCHURE</h2>
+        <p>Portable Tiny Homes from $27,500</p>
+    </div>
+        <form class="registration-form">
+            <input type="text" placeholder="First name" required>
+            <input type="text" placeholder="Last name" required>
+            <input type="text" placeholder="Phone number" required>
+            <input type="email" placeholder="Email address" required>
+            <button type="button" class="submit-btn" onclick="window.location.href='https://elitenest.co/thank-you/'">ENQUIRE NOW ></button>
+
+        </form>
+        <div class="contact-info">
+            <div class="footer-logo">
+                <img src="/EliteNest1/static/Images/Logo-white.svg" alt="logo"/>
+                <h4>Proudly BK SPOT LLC owned & operated.</h4>
+                 <p>© 2024 ALL RIGHTS RESERVED BY ELITE NEST.</p>
+           
+            </div>
+            
+            <div class="social-icons" >
+                <div class="contact">
+                    <p><strong>Phone:</strong> 5129617126</p>
+                <p><strong>Email:</strong><span class="line-email">info@elitenest.co</span></p>
+                </div>
+                
+                <!-- Add your social media icons here -->
+                              <div class="media">
+                    <a href="https://www.tiktok.com/@elite.nest3?_t=8ooYmlF8SnD&_r=1"><i class='bx bxl-tiktok' ></i></a>
+                    <a href="https://www.instagram.com/elitenest_tinyhouses/"><i class='bx bxl-instagram'></i></a>
+                    <a href="https://www.threads.net/@elitenest_tinyhouses?xmt=AQGz3E2j5XIFyvIsXXUWwHFeS-oo5cXaP7LKVT5lBd0MbqA"> <i class="fa-brands fa-threads"></i></a>
+                    <a href="https://www.facebook.com/people/ELITE-NEST/61564014360618/"><i class='bx bxl-facebook'></i></a>
+                    <a href="https://www.youtube.com/@elitenest-s4w"><i class='bx bxl-youtube' ></i></a>
+                    <a href="https://www.pinterest.com/elitenest/_created/"><i class="fa-brands fa-pinterest"></i></a>
+
+                   
+                 </div>
+               
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</footer>
+
+
+            <script>
+                const menuIcon = document.querySelector('.menu-icon');
+                const closeIcon = document.querySelector('.close-icon');
+                const navLinks = document.getElementById('nav-links');
+            
+                menuIcon.addEventListener('click', () => {
+                    navLinks.classList.add('active');
+                    menuIcon.style.display = 'none';
+                    closeIcon.style.display = 'block';
+                });
+            
+                closeIcon.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                    menuIcon.style.display = 'block';
+                    closeIcon.style.display = 'none';
+                });
+            </script>
+            
+            
+            <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+            <script>
+              AOS.init();
+            </script>
+</body>
+</html>

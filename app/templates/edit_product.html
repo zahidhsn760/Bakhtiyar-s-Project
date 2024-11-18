@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% load static %}
+{% load custom_tags %}
+{% block title %}Edit Product{% endblock %}
+
+{% block content %}
+<div class="main">
+    <div class="topbar">
+        <div class="toggle">
+            <ion-icon name="menu-outline"></ion-icon>
+        </div>
+        <div class="product-container">
+            <h1>Edit Product</h1>
+            <form action="{% url 'edit_product' product.id %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="product-name">Product Name:</label>
+                    <input type="text" id="product-name" name="name" value="{{ product.name }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="product-description">Description:</label>
+                    <textarea id="product-description" name="description" rows="4" required>{{ product.description }}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="product-price">Price:</label>
+                    <input type="text" id="product-price" name="price" value="{{ product.price }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="section">Section:</label>
+                    <select id="section" name="section" required>
+                        {% for section, section_label in sections %}
+                            <option value="{{ section }}" {% if product.section == section %}selected{% endif %}>{{ section_label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group" id="subsection-group" {% if product.section == "Veranda" %}style="display: none;"{% endif %}>
+                    <label for="subsection">Subsection:</label>
+                    <select id="subsection" name="subsection"></select> <!-- Dropdown to be filled by JavaScript -->
+                </div>
+                
+                <div class="form-group" id="size-group" {% if product.section != "Roof" %}style="display: none;"{% endif %}>
+                    <label for="size">Size:</label>
+                    <input type="text" id="size" name="size" value="{{ product.size }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="product-image">Image:</label>
+                    <input type="file" name="image" id="product-image">
+                    {% if product.image %}
+                        <p>Current Image: <img src="/EliteNest1/media/{{ product.image.name }}" alt="{{ product.name }}" style="max-width: 100px;"></p>
+                    {% endif %}
+                </div>
+
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Place the JSON data script before JavaScript logic -->
+<script id="subsections-data" type="application/json">
+    {{ subsections|safe }}
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    try {
+        // Access and parse the JSON content
+        const subsections = JSON.parse(document.getElementById('subsections-data').textContent);
+
+        const sectionSelect = document.getElementById('section');
+        const subsectionGroup = document.getElementById('subsection-group');
+        const subsectionSelect = document.getElementById('subsection');
+        const sizeGroup = document.getElementById('size-group');
+
+        function updateFields() {
+            const selectedSection = sectionSelect.value;
+
+            // Show or hide the subsection field
+            if (selectedSection === 'Veranda') {
+                subsectionGroup.style.display = 'none';
+                subsectionSelect.innerHTML = ''; // Clear options
+            } else {
+                subsectionGroup.style.display = 'block';
+                subsectionSelect.innerHTML = ''; // Clear previous options
+
+                if (subsections[selectedSection]) {
+                    subsections[selectedSection].forEach(([subsection, label]) => {
+                        const option = document.createElement('option');
+                        option.value = subsection;
+                        option.textContent = label;
+                        subsectionSelect.appendChild(option);
+                    });
+
+                    // Set the current subsection if it exists
+                    const currentSubsection = "{{ product.subsection }}";
+                    if (currentSubsection) {
+                        subsectionSelect.value = currentSubsection;
+                    }
+                }
+            }
+
+            // Show or hide the size field
+            sizeGroup.style.display = (selectedSection === 'Roof') ? 'block' : 'none';
+        }
+
+        // Event listener for section change
+        sectionSelect.addEventListener('change', updateFields);
+
+        // Initialize fields based on the current section
+        updateFields();
+    } catch (e) {
+        console.error('Failed to parse subsections JSON:', e);
+    }
+});
+</script>
+
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+{% endblock %}

@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Floor's</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <link rel="icon"  type="image/png" href="/EliteNest1/static/Images/icon.jpg">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="/EliteNest1/static/css/Bakt-Style.css">
+    
+</head>
+<body>
+    <header>
+        
+        <nav>
+           <div class="logo">
+                <a href="https://elitenest.co">
+                <img src="/EliteNest1/static/Images/Logo-white.svg" alt="Logo">
+                    </a>
+            </div>
+
+            <a href="#" class="menu-icon"><i class="fas fa-bars"></i></a>
+            
+            <ul class="nav-links" id="nav-links">
+                <li class="dropdown">
+                    <a href="#">Our Range</a>
+                    <ul class="dropdown-menu">
+                        <li><a href=" https://elitenest.co/20-ft-premium-house/ ">20ft Premium House</a></li>
+                        <li><a href="https://elitenest.co/30-ft-premium-house/ ">30ft Premium House</a></li>
+                        <li><a href=" https://elitenest.co/40-ft-premium-house/ ">40ft Premium House</a></li>
+                    </ul>
+                </li>
+                <li><a href="https://elitenest.co/about-us/">About Us</a></li>
+                <li><a href="https://elitenest.co/gallery/">Gallery</a></li>
+                <li><a href="https://elitenest.co/ready-now/">Ready Now</a></li>
+                <li><a href="https://elitenest.co/faqs/">FAQs</a></li>
+                <li><a href="https://elitenest.co/blog/">Blogs</a></li>
+                <li><a href="https://elitenest.co/book-appointment/">Book Viewing</a></li>
+                <li><a href="https://elitenest.co/contact-us/">Contact Us</a></li>
+
+            </ul>
+            
+                <!--<a href="#" class="get-quote-btn">GET QUOTE ></a>-->
+
+            <a href="#" class="close-icon"><i class="fas fa-times"></i></a>
+
+        </nav>
+    
+      
+    </header>
+    <section class="banner">
+         <div class="text-b">
+        <div class="banner-text">
+            <h1>CHOOSE YOUR FLOOR AND MARBLE DESIGNS</h1>
+           
+        </div>
+    </div>
+    </section>
+
+    <div class="sections-Floors">
+        <!-- Section 1 -->
+        <form method="POST" action="{% url 'marble' client_id=client.id%}">
+            {% csrf_token %}
+            
+                                <div class="section">
+                                    <h2>SPC Floor</h2>
+                                    <div class="slider-wrapper">
+                                        <button class="prev-btn">&#10094;</button>     
+                                    <div class="slider-container" id="slider-container-1">
+                                        <!-- Card 1 -->
+                                        <div class="floor-card">
+                                            <label for="card1">
+                                            <input type="radio" id="card1" name="selectCard1" class="radio-input" value="2021">
+                                            <img src="/EliteNest1/static/Images/ilovepdf_pages-to-jpg/ELITE NEST SPC Floor Design 1.jpg" alt="Card Image 1">
+                                            <h3>2021</h3>
+                                            </label>
+                                        </div>
+                                        <!-- Card 2 -->
+                                        <div class="floor-card">
+                                                 <label for="card2">
+                                            <input type="radio" id="card2" name="selectCard1" class="radio-input" value="2022">
+                                            <img src="/EliteNest1/static/Images/ilovepdf_pages-to-jpg/ELITE NEST SPC Floor Design 2.jpg" alt="Card Image 2">
+                                            <h3>2022</h3>
+                                            </lable>
+                                        </div>
+                                        <!-- Card 3 -->
+                                        <div class="floor-card">
+                                                 <label for="card3">
+                                            <input type="radio" id="card3"name="selectCard1" class="radio-input" value="2025">
+                                            <img src="/EliteNest1/static/Images/ilovepdf_pages-to-jpg/ELITE NEST SPC Floor Design 3.jpg" alt="Card Image 3">
+                                            <h3>2025</h3>
+                                            </lable>
+                                        </div>
+                                        <!-- Card 4 -->
+                                        <div class="floor-card">
+                                                 <label for="card4">
+                                            <input type="radio" id="card4"name="selectCard1" class="radio-input" value="2026">
+                                            <img src="/EliteNest1/static/Images/ilovepdf_pages-to-jpg/ELITE NEST SPC Floor Design 4.jpg" alt="Card Image 4">
+                                            <h3>2026</h3>
+                                            </lable>
+                                        </div>
+                                        <div class="floor-card">
+                                                 <label for="card5">
+                                            <input type="radio" id="card5"name="selectCard1" class="radio-input" value="2203">
+                                            <img src="/EliteNest1/static/Images/ilovepdf_pages-to-jpg/ELITE NEST SPC Floor Design 5.jpg" alt="Card Image 4">
+                                            <h3>2203</h3>
+                                            </lable>
+                                        </div>
+                                        <div class="floor-card">
+                                                 <label for="card6">
+                                            <input type="radio" 
+                                            id="card6"name="selectCard1" class="radio-input" value="2205">
+                                            <img src="/EliteNest1/static/Images/ilovepdf_pages-to-jpg/ELITE NEST SPC Floor Design 6.jpg" alt="Card Image 4">
+                                            <h3>2205</h3>
+                                            </lable>
+                                        </div>
+                                        <div class="floor-card">
+                                                 <label for="card7">
+                                            <input type="radio" id="card7" name="selectCard1" class="radio-input" value="2206">
+                                            <img src="/EliteNest1/static/Images/ilovepdf_pages-to-jpg/ELITE NEST SPC Floor Design 7.jpg" alt="Card Image 4">
+                                            <h3>2206</h3>
+                                            </lable>
+                                        </div>
+                                        <div class="floor-card">
+                                                 <label for="card8">
+                                            <input type="radio"id="card8" name="selectCard1" class="radio-input" value="2208">
+                                            <img src="/EliteNest1/static/Images/ilovepdf_pages-to-jpg/ELITE NEST SPC Floor Design 8.jpg" alt="Card Image 4">
+                                            <h3>2208</h3>
+                                            </lable>
+                                        </div>
+                                        <div class="floor-card">
+                                                 <label for="card9">
+                                            <input type="radio" id="card9" name="selectCard1" class="radio-input" value="2209">
+                                            <img src="/EliteNest1/static/Images/ilovepdf_pages-to-jpg/ELITE NEST SPC Floor Design 9.jpg" alt="Card Image 4">
+                                            <h3>2209</h3>
+                                            </lable>
+                                        </div>
+                                        <div class="floor-card">
+                                                 <label for="card10">
+                                            <input type="radio" id="card10" name="selectCard1" class="radio-input" value="2821">
+                                            <img src="/EliteNest1/static/Images/ilovepdf_pages-to-jpg/ELITE NEST SPC Floor Design 10.jpg" alt="Card Image 4">
+                                            <h3>2821</h3>
+                                            </lable>
+                                        </div>
+                                        <div class="floor-card">
+                                                 <label for="card11">
+                                            <input type="radio" id="card11" name="selectCard1" class="radio-input" value="2822">
+                                            <img src="/EliteNest1/static/Images/ilovepdf_pages-to-jpg/ELITE NEST SPC Floor Design 11.jpg" alt="Card Image 4">
+                                            <h3>2822</h3>
+                                            </lable>
+                                        </div>
+
+                                        <div class="floor-card">
+                                                 <label for="card12">
+                                            <input type="radio" id="card12" name="selectCard1" class="radio-input" value="2823">
+                                            <img src="/EliteNest1/static/Images/ilovepdf_pages-to-jpg/ELITE NEST SPC Floor Design 12.jpg" alt="Card Image 4">
+                                            <h3>2823</h3>
+                                            </lable>
+                                        </div>
+
+                                        <div class="floor-card">
+                                                 <label for="card13">
+                                            <input type="radio" id="card13" name="selectCard1" class="radio-input" value="2825">
+                                            <img src="/EliteNest1/static/Images/ilovepdf_pages-to-jpg/ELITE NEST SPC Floor Design 13.jpg" alt="Card Image 4">
+                                            <h3>2825</h3>
+                                            </lable>
+                                        </div>
+
+                                        <div class="floor-card">
+                                                 <label for="card14">
+                                            <input type="radio" id="card14" name="selectCard1" class="radio-input" value="2827">
+                                            <img src="/EliteNest1/static/Images/ilovepdf_pages-to-jpg/ELITE NEST SPC Floor Design 14.jpg" alt="Card Image 4">
+                                            <h3>2827</h3>
+                                            </lable>
+                                        </div>
+
+                                        <div class="floor-card">
+                                                 <label for="card15">
+                                            <input type="radio" id="card15" name="selectCard1" class="radio-input" value="2829">
+                                            <img src="/EliteNest1/static/Images/ilovepdf_pages-to-jpg/ELITE NEST SPC Floor Design 15.jpg" alt="Card Image 4">
+                                            <h3>2829</h3>
+                                            </lable>
+                                        </div>
+                                        
+                                    </div>
+                                    <button class="next-btn" type="button">&#10095;</button>
+                                    </div>
+                                </div>
+                            
+                                <!-- Section 2 -->
+                                <div class="section">
+                                    <h2>Marbles</h2>
+                                    <div class="slider-wrapper">
+                                        <button class="prev-btn">&#10094;</button> 
+                                    <div class="slider-container" id="slider-container-2">
+                                        <!-- Card 1 -->
+                                        <div class="floor-card">
+                                                 <label for="card16">
+                                            <input type="radio" id="card16"name="selectCard" class="radio-input" value="5803">
+                                            <img src="/EliteNest1/static/Images/marbaltop/m1.png" alt="Card Image 1"  class="marbale-image">
+                                            <h3>5803</h3>
+                                            </lable>
+                                        </div>
+                                        <!-- Card 2 -->
+                                        <div class="floor-card">
+                                                 <label for="card17">
+                                            <input type="radio" id="card17" name="selectCard" class="radio-input" value="5811">
+                                            <img src="/EliteNest1/static/Images/marbaltop/M2.png" alt="Card Image 2" class="marbale-image">
+                                            <h3>5811</h3>
+                                            </lable>
+                                        </div>
+                                        <!-- Card 3 -->
+                                        <div class="floor-card">
+                                                 <label for="card18">
+                                            <input type="radio" id="card18" name="selectCard" class="radio-input" value="5831">
+                                            <img src="/EliteNest1/static/Images/marbaltop/m3.png" alt="Card Image 3" class="marbale-image">
+                                            <h3>5831</h3>
+                                            </lable>
+                                        </div>
+                                        <!-- Card 4 -->
+                                        <div class="floor-card">
+                                                 <label for="card19">
+                                            <input type="radio" id="card19" name="selectCard" class="radio-input" value="5862">
+                                            <img src="/EliteNest1/static/Images/marbaltop/M4.png" alt="Card Image 4"class="marbale-image">
+                                            <h3>5862</h3>
+                                            </lable>
+                                        </div>
+                                        <div class="floor-card">
+                                                 <label for="card20">
+                                            <input type="radio" id="card20" name="selectCard" class="radio-input" value="5806">
+                                            <img src="/EliteNest1/static/Images/marbaltop/M5.png" alt="Card Image 5" class="marbale-image" >
+                                            <h3>5806</h3>
+                                            </lable>
+                                        </div>
+                                        <div class="floor-card">
+                                                 <label for="card21">
+                                            <input type="radio" id="card21"  name="selectCard" class="radio-input" value="5828">
+                                            <img src="/EliteNest1/static/Images/marbaltop/M6.png" alt="Card Image 6"class="marbale-image">
+                                            <h3>5828</h3>
+                                            </lable>
+                                        </div>
+                                        <div class="floor-card">
+                                                 <label for="card22">
+                                            <input type="radio" id="card22"  name="selectCard" class="radio-input" value="5825">
+                                            <img src="/EliteNest1/static/Images/marbaltop/M7.png" alt="Card Image 7"  class="marbale-image">
+                                            <h3>5825</h3>
+                                        </div>
+                                        <div class="floor-card">
+                                                 <label for="card23">
+                                            <input type="radio" id="card23"  name="selectCard" class="radio-input" value="6842">
+                                            <img src="/EliteNest1/static/Images/marbaltop/M8.png" alt="Card Image 8" class="marbale-image">
+                                            <h3>6842</h3>
+                                            </lable>
+                                            
+                                        </div>
+                                        <div class="floor-card">
+                                                 <label for="card24">
+                                            <input type="radio" id="card24"  name="selectCard" class="radio-input" value="007">
+                                            <img src="/EliteNest1/static/Images/marbaltop/M9.png" alt="Card Image 9"  class="marbale-image">
+                                            <h3>007</h3>
+                                            </lable>
+                                        </div>
+                                        <div class="floor-card">
+                                                 <label for="card25">
+                                            <input type="radio" id="card25"  name="selectCard" class="radio-input" value="003">
+                                            <img src="/EliteNest1/static/Images/marbaltop/M10.png" alt="Card Image 10"class="marbale-image">
+                                            <h3>003</h3>
+                                            </lable>
+                                        </div>
+                                        <div class="floor-card">
+                                                 <label for="card26">
+                                            <input type="radio" id="card26"  name="selectCard" class="radio-input" value="004
+                                            ">
+                                            <img src="/EliteNest1/static/Images/marbaltop/M11.png" alt="Card Image 11"  class="marbale-image">
+                                            <h3>004</h3>
+                                            </lable>
+                                        </div>
+                                        <div class="floor-card">
+                                                 <label for="card27">
+                                            <input type="radio" id="card27"  name="selectCard" class="radio-input" value="6801">
+                                            <img src="/EliteNest1/static/Images/marbaltop/M12.png" alt="Card Image 12"  class="marbale-image">
+                                            <h3>6801</h3>
+                                            </lable>
+                                        </div>
+
+                                        <div class="floor-card">
+                                                 <label for="card28">
+                                            <input type="radio" id="card28"  name="selectCard" class="radio-input" value="009">
+                                            <img src="/EliteNest1/static/Images/marbaltop/M13.png" alt="Card Image 13" class="marbale-image">
+                                            <h3>009</h3>
+                                            </lable>
+                                        </div>
+                                        <div class="floor-card">
+                                                                                             <label for="card29">
+                                            <input type="radio" id="card29"  name="selectCard" class="radio-input" value="010">
+                                            <img src="/EliteNest1/static/Images/marbaltop/M14.png" alt="Card Image 14"  class="marbale-image">
+                                            <h3>010</h3>
+                                            </lable>
+                                        </div>
+
+                                        <div class="floor-card">
+                                                                                             <label for="card30">
+                                            <input type="radio" id="card30"  name="selectCard" class="radio-input" value="5842">
+                                            <img src="/EliteNest1/static/Images/marbaltop/M15.png" alt="Card Image 15" class="marbale-image">
+                                            <h3>5842</h3>
+                                            </lable>
+                                        </div>
+                                        <div class="floor-card">
+                                                                                             <label for="card31">
+                                            <input type="radio" id="card31"  name="selectCard" class="radio-input" value="6845">
+                                            <img src="/EliteNest1/static/Images/marbaltop/M16.png" alt="Card Image 16" class="marbale-image">
+                                            <h3>6845</h3>
+                                            </lable>
+                                        </div>
+                                        <div class="floor-card">
+                                                                                             <label for="card32">
+                                            <input type="radio" id="card32"  name="selectCard" class="radio-input" value="6808">
+                                            <img src="/EliteNest1/static/Images/marbaltop/M17.png" alt="Card Image 17"  class="marbale-image">
+                                            <h3>6808</h3>
+                                            </lable>
+                                        </div>
+                                        <div class="floor-card">
+                                                                                             <label for="card33">
+                                            <input type="radio" id="card33"  name="selectCard" class="radio-input" value="5805">
+                                            <img src="/EliteNest1/static/Images/marbaltop/M18.png" alt="Card Image 18" class="marbale-image">
+                                            <h3>5805</h3>
+                                            </lable>
+                                        </div>
+                                        
+                                        <div class="floor-card">
+                                                                                             <label for="card34">
+                                            <input type="radio" id="card34" name="selectCard" class="radio-input" value="5804">
+                                            <img src="/EliteNest1/static/Images/marbaltop/M19.png" alt="Card Image 19"  class="marbale-image">
+                                            <h3>5804</h3>
+                                            </lable>
+                                        </div>
+                                        
+                                        
+                                        <div class="floor-card">
+                                                                                             <label for="card35">
+                                            <input type="radio" id="card35"  name="selectCard" class="radio-input" value="5829">
+                                            <img src="/EliteNest1/static/Images/marbaltop/M20.png" alt="Card Image 20"  class="marbale-image">
+                                            <h3>5829</h3>
+                                            </lable>
+                                        </div>
+                                        <div class="floor-card ">
+                                                                                             <label for="card36">
+                                            
+                                            <input type="radio" id="card36"  name="selectCard" class="radio-input" value="5851">
+                                            <img src="/EliteNest1/static/Images/marbaltop/M21.png" alt="Card Image 21" class="marbale-image">
+                                            <h3>5851</h3>
+                                            </lable>
+                                        </div>
+                                        <div class=" floor-card">
+                                                                                             <label for="card37">
+                                            <input type="radio" id="card37"  name="selectCard" class="radio-input" value="5860">
+                                            <img src="/EliteNest1/static/Images/marbaltop/M22.png" alt="Card Image 22" class="marbale-image">
+                                            <h3>5860</h3>
+                                            </lable>
+                                        </div>
+                                        <div class=" floor-card">
+                                                                                         <label for="card38">
+                                            <input type="radio" id="card38"  name="selectCard" class="radio-input" value="5821">
+                                            <img src="/EliteNest1/static/Images/marbaltop/M23.png" alt="Card Image 23" class="marbale-image">
+                                            <h3>5821</h3>
+                                            </lable>
+                                        </div>
+                                        
+                                    <div class=" floor-card">
+                                                                                         <label for="card39">
+                                            <input type="radio" id="card39"  name="selectCard" class="radio-input" value="6802">
+                                            <img src="/EliteNest1/static/Images/marbaltop/M24.png" alt="Card Image 24"  class="marbale-image">
+                                            <h3>6802</h3>
+                                            </lable>
+                                        </div>
+                                    </div>
+                                    <button class="next-btn" type="button">&#10095;</button>
+                                </div>
+                        </div>
+                          <button type="submit" class="submit-btn-marbal">Get Instant Quote  ></button>
+                        </div>
+                      
+</form>
+
+
+
+<!-- Footer Section -->
+<footer>
+<div class="footer-banner">
+    <div class="overlay"></div>
+ <div class="footer-content">
+        <div class="footer-banner-text">
+        <h2>REGISTER YOUR INTEREST & DOWNLOAD OUR BROCHURE</h2>
+        <p>Portable Tiny Homes from $27,500</p>
+    </div>
+        <form class="registration-form">
+            <input type="text" placeholder="First name" required>
+            <input type="text" placeholder="Last name" required>
+            <input type="text" placeholder="Phone number" required>
+            <input type="email" placeholder="Email address" required>
+            <button type="button" class="submit-btn" onclick="window.location.href='https://elitenest.co/thank-you/'">ENQUIRE NOW ></button>
+        </form>
+        <div class="contact-info">
+            <div class="footer-logo">
+                <img src="/EliteNest1/static/Images/Logo-white.svg" alt="logo"/>
+                <h4>Proudly BK SPOT LLC owned & operated.</h4>
+                 <p>© 2024 ALL RIGHTS RESERVED BY ELITE NEST.</p>
+           
+            </div>
+            
+            <div class="social-icons" >
+                <div class="contact">
+                    <p><strong>Phone:</strong> 5129617126</p>
+                <p><strong>Email:</strong><span class="line-email">info@elitenest.co</span></p>
+                </div>
+                
+                <!-- Add your social media icons here -->
+                <div class="media">
+                    <a href="https://www.tiktok.com/@elite.nest3?_t=8ooYmlF8SnD&_r=1"><i class='bx bxl-tiktok' ></i></a>
+                    <a href="https://www.instagram.com/elitenest_tinyhouses/"><i class='bx bxl-instagram'></i></a>
+                    <a href="https://www.threads.net/@elitenest_tinyhouses?xmt=AQGz3E2j5XIFyvIsXXUWwHFeS-oo5cXaP7LKVT5lBd0MbqA"> <i class="fa-brands fa-threads"></i></a>
+                    <a href="https://www.facebook.com/people/ELITE-NEST/61564014360618/"><i class='bx bxl-facebook'></i></a>
+                    <a href="https://www.youtube.com/@elitenest-s4w"><i class='bx bxl-youtube' ></i></a>
+                    <a href="https://www.pinterest.com/elitenest/_created/"><i class="fa-brands fa-pinterest"></i></a>
+
+                   
+                 </div>
+               
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</footer>
+    
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+  AOS.init();
+</script>
+<script>
+    const slider = document.getElementById('slider-container-1');
+    const prevButton = document.querySelector('.prev-btn');
+    const nextButton = document.querySelector('.next-btn');
+
+    prevButton.addEventListener('click', () => {
+        event.preventDefault(); 
+        slider.scrollLeft -= 200; // Adjust scroll amount as needed
+    });
+
+    nextButton.addEventListener('click', () => {
+        event.preventDefault(); 
+        slider.scrollLeft += 200; // Adjust scroll amount as needed
+    });
+
+
+
+
+    const slider2 = document.getElementById('slider-container-2');
+    const prevButton2 = document.querySelectorAll('.prev-btn')[1]; // Select the second prev button
+    const nextButton2 = document.querySelectorAll('.next-btn')[1]; // Select the second next button
+ console.log('test', nextButton2)
+    prevButton2.addEventListener('click', () => {
+        event.preventDefault(); 
+        slider2.scrollLeft -= 200; // Adjust scroll amount as needed
+    });
+
+    nextButton2.addEventListener('click', () => {
+        event.preventDefault(); 
+        slider2.scrollLeft += 200; // Adjust scroll amount as needed
+    });
+
+</script>
+
+    
+</body>
+</html>

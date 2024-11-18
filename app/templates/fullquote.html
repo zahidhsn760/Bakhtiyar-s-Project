@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quote Form with Expandable Cards and Fixed Calculator</title>
+    <link rel="stylesheet" href="/static/css/Bakt-Style.css">
+    <style>
+        /* * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        } */
+
+        /* body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        } */
+
+        .header {
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: gray;
+        }
+
+        .container {
+            /* display: flex; */
+            /* justify-content: space-between; */
+            padding: 0 20px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            /* width: 70%; */
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            text-align: center;
+            padding: 20px;
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .card img {
+            max-width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .card-content h3 {
+            font-size: 20px;
+            margin: 15px 0 5px 0;
+        }
+
+        .card-content p {
+            color: gray;
+            margin-bottom: 10px;
+        }
+
+        .card-content .price {
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+
+        .card-checkbox {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 20px;
+            height: 20px;
+        }
+
+        .fixed-calculator {
+            /* width: 25%; */
+            padding: 20px;
+            background: #fff;
+            box-shadow: -4px 0 8px rgba(0, 0, 0, 0.1);
+            /* height: 100vh; */
+            position: fixed;
+            right: 10px;
+           bottom: 10px;
+        }
+
+        .fixed-calculator h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .fixed-calculator p {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        .total-price {
+            font-size: 28px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .fixed-calculator {
+                width: 100%;
+                position: static;
+                box-shadow: none;
+                margin-top: 20px;
+            }
+
+            .cards {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+  <div class="header">
+      <h1>Expanders Quote Form</h1>
+      <p>Fill out the form below to get your quote.</p>
+  </div>
+
+  <div class="container">
+    <form method="post" action="{% url 'second_page' client_id=client_id %}">
+      {% csrf_token %}
+      <div class="container">
+          <div class="cards">
+              {% for product in products %}
+              <div class="card">
+                  <input type="checkbox" name="selected_products" value="{{ product.id }}" data-price="{{ product.price }}" onclick="updateTotal()">
+                  <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                  <div class="card-content">
+                      <h3>{{ product.name }}</h3>
+                      <p>{{ product.description }}</p>
+                      <div class="price">${{ product.price }}</div>
+                      <input type="number" name="quantities_{{ product.id }}" min="1" value="1" class="quantity-input" onchange="updateTotal()">
+                  </div>
+              </div>
+              {% endfor %}
+          </div>
+
+          <div class="fixed-calculator">
+              <h2>Price Calculator</h2>
+              <p>Total Price: <span id="totalPrice">$0</span> NZD</p>
+              <button type="submit">Submit</button>
+          </div>
+      </div>
+  </form>
+
+  <script>
+      function updateTotal() {
+          let checkboxes = document.querySelectorAll('input[name="selected_products"]');
+          let totalPrice = 0;
+
+          checkboxes.forEach(checkbox => {
+              if (checkbox.checked) {
+                  let productId = checkbox.value;
+                  let quantityInput = document.querySelector(`input[name="quantities_${productId}"]`);
+                  let price = parseFloat(checkbox.getAttribute('data-price'));
+                  let quantity = parseInt(quantityInput.value, 10);
+
+                  totalPrice += price * quantity;
+              }
+          });
+
+          document.getElementById('totalPrice').textContent = totalPrice.toLocaleString();
+      }
+  </script>
+</body>
+</html>

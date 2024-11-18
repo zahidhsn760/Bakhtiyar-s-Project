@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Requests</title>
+        <link rel="icon"  type="image/png" href="/EliteNest1/static/Images/icon.jpg">
+
+</head>
+<body>
+    <h1>Client Requests</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Client</th>
+                <th>Products</th>
+                <th>Total Price</th>
+                <th>Delivery Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in request_data %}
+            <tr>
+                <td>{{ request.client.First_Name }} {{ request.client.Last_Name }}</td>
+                <td>
+                    <ul>
+                        {% for product in request.products %}
+                        <li>
+                            {{ product.name }} - Quantity: {{ product.quantity }} - Price: ${{ product.price }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td>${{ request.total_price }}</td>
+                <td>
+                    {% if request.delivery_address %}
+                        <p>Address Line 1: {{ request.delivery_address.address_line_1 }}</p>
+                        <p>Address Line 2: {{ request.delivery_address.address_line_2 }}</p>
+                        <p>City: {{ request.delivery_address.city }}</p>
+                        <p>Region: {{ request.delivery_address.region }}</p>
+                        <p>Postal Code: {{ request.delivery_address.postal_code }}</p>
+                        <p>Country: {{ request.delivery_address.country }}</p>
+                        <p>Additional Info: {{ request.delivery_address.additional_info }}</p>
+                    {% else %}
+                        <p>No delivery address provided.</p>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

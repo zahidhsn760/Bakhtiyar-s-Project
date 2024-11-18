@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %}Client Details{% endblock %}
+
+{% block content %}
+<div class="main">
+    <div class="topbar">
+        <div class="toggle">
+            <ion-icon name="menu-outline"></ion-icon>
+        </div>
+    </div>
+    <div class="details">
+        <div class="client-card">
+            <div class="details-container">
+                <div class="container2">
+                    <h1>Client Details</h1>
+                    <div class="profile-details">
+                        <div class="grid">
+                            <div class="label">Client ID:</div>
+                            <div class="value">{{ client.id }}</div>
+
+                            <div class="label">Client Name:</div>
+                            <div class="value">{{ client.First_Name }} {{ client.Last_Name }}</div>
+
+                            <div class="label">Phone Number:</div>
+                            <div class="value">{{ client.phone_number }}</div>
+
+                            <div class="label">Email:</div>
+                            <div class="value">{{ client.Email }}</div>
+
+                            <div class="label"> Delivery Address:</div>
+                            <div class="value">
+                                {{ delivery_address.address_line_1 }}<br>
+                                
+                                
+                              
+                                
+                            </div>
+                            <div class="label"> City:</div>
+                            <div class="value">
+                                {{ delivery_address.city }}, {{ delivery_address.postal_code }} , {{ delivery_address.country }}<br>
+                            </div>
+                          
+                            <div class="label"> Additional Information:</div>
+                            <div class="value">
+                                {{ delivery_address.additional_info }}   
+                            </div>
+
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="product-details">
+                    <h2>Product Details</h2>
+                    
+                    
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for product in product_details %}
+                            <tr>
+                                <td>{{ product.name }}</td>
+                                <td>{{ product.quantity }}</td>
+                                <td>${{ product.price }}</td>
+                                <td>${{ product.total }}</td>
+                            </tr>
+                            {% endfor %}
+                            <tr class="total-row1">
+                                <td >Delivery Charges</td>
+                                
+                                <td >{{ delivery_address.quantity}}</td>
+                                
+                                <td style=> ${{ delivery_address.deliveryPrice|default_if_none:"0.00"}}</td>
+                                <td> ${{ delivery_address.totaldeliveryPrice|default_if_none:"0.00"}}</td>
+                                
+                            </tr>
+                            <tr class="total-row">
+                                <td colspan="3">Total</td>
+                                <td>${{ total_sum }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table>
+                        <tr class="total-row">
+                        <td>Floor Code</td>
+                        <td>
+                          
+                                {{ delivery_address.Floor_code }}   <!-- Display Floor Code here -->
+                           
+                        </td>
+                    </tr>
+                    </table>
+                    {% comment %} <a href="{% url 'send_email' client.id %}" class="send-email">Send Email</a> {% endcomment %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quote Form with Expandable Cards, Quantity Selector, and Fixed Calculator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="/EliteNest1/static/css/Bakt-Style.css">
+    <link rel="icon"  type="image/png" href="/EliteNest1/static/Images/icon.jpg">
+    <style>
+      /* Hide the roof section initially */
+      #roof-section {
+        display: none;
+    }
+    #glass-section {
+        display: none;
+    }
+
+    </style>
+</head>
+<body>
+   <header>
+        <nav>
+            <div class="logo">
+                <a href="https://elitenest.co">
+                <img src="/EliteNest1/static/Images/Logo-white.svg" alt="Logo">
+                    </a>
+            </div>
+            <a href="#" class="menu-icon"><i class="fa-solid fa-bars"></i></a>
+            
+            <ul class="nav-links" id="nav-links">
+                <li class="dropdown">
+                    <a href="#">Our Range</a>
+                    <ul class="dropdown-menu">
+                        <li><a href=" https://elitenest.co/20-ft-premium-house/ ">20ft Premium House</a></li>
+                        <li><a href="https://elitenest.co/30-ft-premium-house/ ">30ft Premium House</a></li>
+                        <li><a href=" https://elitenest.co/40-ft-premium-house/ ">40ft Premium House</a></li>
+                    </ul>
+                </li>
+                <li><a href="https://elitenest.co/about-us/">About Us</a></li>
+                <li><a href="https://elitenest.co/gallery/">Gallery</a></li>
+                <li><a href="https://elitenest.co/ready-now/">Ready Now</a></li>
+                <li><a href="https://elitenest.co/faqs/">FAQs</a></li>
+                <li><a href="https://elitenest.co/blog/">Blogs</a></li>
+                <li><a href="https://elitenest.co/book-appointment/">Book Viewing</a></li>
+                <li><a href="https://elitenest.co/contact-us/">Contact Us</a></li>
+
+            </ul>
+                            <!--<a href="#" class="get-quote-btn">GET QUOTE ></a>-->
+
+
+            <a href="#" class="close-icon"><i class="fas fa-times"></i></a>
+
+        </nav>
+      
+    </header>
+    <section class="banner">
+         <div class="text-b">
+        <div class="banner-text">
+            <h1>REQUEST A QUOTE</h1>
+            
+        </div>
+    </div>
+</section>
+    <div class="header">
+        <h1>EliteNest Quote Form</h1>
+        <p>Fill out the form below to get your quote.</p>
+    </div>
+
+    <div class="container">
+        <form method="post" action="{% url 'second_page' %}">
+            {% csrf_token %}
+          
+        
+              <!-- Floor Plan Section -->
+              <div class="section">
+                <h2>Floor Plan</h2>
+                {% for subsection, products in products_by_section.Floor.items %}
+                    <div class="subsection">
+                        <h3 style="margin-bottom:10px; margin-top:10px;">{{ subsection }}</h3>
+                        <div class="product-list">
+                            {% for product in products %}
+                                <div class="card">
+                                    
+                                    <label for="radio_floor_{{ product.id }}">
+                                        <input id="radio_floor_{{ product.id }}" type="radio" name="selected_floor" value="{{ product.id }}" data-size="{{ subsection }}" data-price="{{ product.price }}" onclick="toggleRadio(this); updateRoofOptions('{{ subsection }}')">
+                                        <img src="/EliteNest1/media/{{ product.image.name }}" alt="{{ product.name }}">
+                                        <h3>{{ product.name }}</h3>
+                                        <p>{{ product.description }}</p>
+            
+                                        <div class="qty">
+                                            <div class="price">
+                                                <!--<p1 class="price-paragrhp">Price: -->
+                                                <!--<span>${{ product.price }}</span></p1>-->
+                                            </div>
+                                            <div class="quantity">
+                                                <label for="quantity_floor_{{ product.id }}">Quantity:</label>
+                                                <select id="quantity_floor_{{ product.id }}" name="quantities_{{ product.id }}" onchange="updateTotal()">
+                                                    {% for quantity in quantity_range %}
+                                                        <option value="{{ quantity }}">{{ quantity }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </label> 
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            
+
+   <!-- Roof Section -->
+<div class="section" id="roof-section">
+    <h2 style="display: inline;">Additional Roof Plan </h2> 
+    <span style="font-size: 1.17em;">(Select this if you require extra layer of Insulation or If you love V-Shape roof designs)</span>
+
+    {% for subsection, products in products_by_section.Roof.items %}
+        <div class="subsection" data-size="{{ subsection }}">
+            <h3 style="margin-bottom:10px ;margin-top:10px;">{{ subsection }} (Extra Layer)</h3>
+            <div class="product-list">
+                {% for product in products %}
+                    <div class="card" data-size="{{ product.size }}">
+                       
+                        <label for="radio_roof_{{ product.id }}">
+                            <input id="radio_roof_{{ product.id }}" type="radio" name="selected_roof" value="{{ product.id }}" data-price="{{ product.price }}" onclick="toggleRadio1(this)">
+                            <img src="/EliteNest1/media/{{ product.image.name }}" alt="{{ product.name }}">
+                            <h3>{{ product.name }}</h3>
+                            <p>{{ product.description }}</p>
+                            <div class="qty">
+                                <div class="price">
+                                    <p1 class="price-paragrhp">Price: 
+                                    <span>${{ product.price }}</span></p1>
+                                </div>
+                                <!--<div class="quantity">-->
+                                <!--    <label for="quantity_roof_{{ product.id }}">Quantity:</label>-->
+                                <!--    <select id="quantity_roof_{{ product.id }}" name="quantities_{{ product.id }}" onchange="updateTotal()">-->
+                                <!--        {% for quantity in quantity_range %}-->
+                                <!--            <option value="{{ quantity }}">{{ quantity }}</option>-->
+                                <!--        {% endfor %}-->
+                                <!--    </select>-->
+                                <!--</div>-->
+                            </div>
+                        </label> 
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+</div>    
+
+<!-- Glass Section -->
+<div class="section" id="glass-section">
+    <h2>Extra 50mm Glass wool Floor</h2>
+    {% for subsection, products in products_by_section.Extra_50mm_Glass_wool_Floor.items %}
+        <div class="subsection" data-size="{{subsection}}">
+            <h3 style="margin-bottom:10px; margin-top:10px;">{{ subsection }}</h3>
+            <div class="product-list">
+                {% for product in products %}
+                    <div class="card" data-size="{{subsection}}">
+                        <label for="radio_glass_{{ product.id }}">
+                            <input id="radio_glass_{{ product.id }}" type="radio" name="selected_glass" value="{{ product.id }}" data-price="{{ product.price }}"  onclick="toggleRadio1(this)">
+                            <img src="/EliteNest1/media/{{ product.image.name }}" alt="{{ product.name }}">
+                            <h3>{{ product.name }}</h3>
+                            <p>{{ product.description }}</p>
+                            <div class="qty">
+                                <div class="price">
+                                   <p1 class="price-paragrhp">Price:
+                                    <span>${{ product.price }}</span></p1>
+                                </div>
+                                <!--<div class="quantity">-->
+                                <!--    <label for="quantity_glass_{{ product.id }}">Quantity:</label>-->
+                                <!--    <select id="quantity_glass_{{ product.id }}" name="quantities_{{ product.id }}" onchange="updateTotal()">-->
+                                <!--        {% for quantity in quantity_range %}-->
+                                <!--            <option value="{{ quantity }}">{{ quantity }}</option>-->
+                                <!--        {% endfor %}-->
+                                <!--    </select>-->
+                                <!--</div>-->
+                            </div>
+                        </label> 
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+
+<!-- Veranda Section -->
+<div class="section" id="veranda-section">
+    <h2>Veranda</h2>
+    <div class="product-list">
+        {% for product in products_by_section.Veranda %}
+            <div class="card" data-size="veranda">
+                
+                <label for="radio_veranda_{{ product.id }}">
+                    <input id="radio_veranda_{{ product.id }}" type="radio" name="selected_veranda" value="{{ product.id }}" data-price="{{ product.price }}"  onclick="toggleRadio1(this)">
+                    <img src="/EliteNest1/media/{{ product.image.name }}" alt="{{ product.name }}">
+                    <h3>{{ product.name }}</h3>
+                    <p>{{ product.description }}</p>
+                    <div class="qty">
+                        <div class="price">
+                            <p1 class="price-paragrhp">Price: 
+                            <span>${{ product.price }}</span></p1>
+                        </div>
+                        <!--<div class="quantity">-->
+                        <!--    <label for="quantity_veranda_{{ product.id }}">Quantity:</label>-->
+                        <!--    <select id="quantity_veranda_{{ product.id }}" name="quantities_{{ product.id }}" onchange="updateTotal()">-->
+                        <!--        {% for quantity in quantity_range %}-->
+                        <!--            <option value="{{ quantity }}">{{ quantity }}</option>-->
+                        <!--        {% endfor %}-->
+                        <!--    </select>-->
+                        <!--</div>-->
+                    </div>
+                </label> 
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+    </div>       
+            <!--<div class="fixed-calculator" data-aos="fade-up-left">-->
+            <!--    <h2>Price Calculator</h2>-->
+            <!--    <div>-->
+            <!--        <p>Product Price: $<span id="productPrice">0</span></p>-->
+            <!--        <p>Delivery Charges: $<span id="deliveryPrice">0</span></p>-->
+            <!--        <p>Total Price: $<span id="totalPrice">0</span></p>-->
+            <!--    </div>-->
+            <!--</div>-->
+        
+            <div class="line">
+                <div class="delivery-container">
+                   
+        
+                <!-- Personal Information Section -->
+                
+                    <div style="margin-top:10px">
+                    <h2>Delivery Address</h2>
+                    <!--<div class="delivrey-group">-->
+                    <!--    <label for="address">Street Address *</label>-->
+                    <!--    <input type="text" id="address" name="address" placeholder="123 Real Street" required>-->
+                    <!--</div>-->
+        
+                    <div class="form-group-grid">
+                        <div class="delivrey-group">
+                            <label for="city">City *</label>
+                            <input type="text" id="city" name="city" placeholder="Brooklyn" required>
+                        </div>
+        
+                        <div class="delivrey-group">
+                            <label for="country">State</label>
+                            <!-- State Dropdown -->
+                            <select id="state" name="state" onchange="updateTotal()" required>
+                                <option value="" disabled selected>Select your state</option>
+                            </select>
+                            <input type="hidden" name="state_name" id="state_name">
+                        </div>
+        
+                        <!--<div class="delivrey-group">-->
+                        <!--    <label for="postal-code">Postal / Zip Code *</label>-->
+                        <!--    <input type="text" id="postal-code" name="postal-code" placeholder="11241" required>-->
+                        <!--</div>-->
+                    </div>
+        
+                    <div class="delivrey-group">
+                        <label for="delivery-info">Please provide more information about delivery drop-off location? Is there a clear path? Will it be going in a backyard? How far is drop off point from path etc.? *</label>
+                        <textarea id="delivery-info" name="delivery-info" placeholder="The Elite Nest will be going in my backyard, there is a clear path to the backyard but the crane arm will need to extend about 8m past my house. I want it placed between my garage and swimming pool but there is plenty of room." rows="5" required></textarea>
+                    </div>
+                    </div>
+                    <!--<hr style="margin-top:10px">-->
+                    <!--<h2>Full Name *</h2>-->
+                    <div class="personal-info-section">
+                    <div class="delivrey-group">
+                        <label for="first-name">First Name *</label>
+                        <input type="text" id="first-name" name="first_name" required>
+                    </div>
+        
+                    <div class="delivrey-group">
+                        <label for="last-name">Last Name *</label>
+                        <input type="text" id="last-name" name="last_name" required>
+                    </div>
+        
+                    <div class="delivrey-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+        
+                    <div class="delivrey-group">
+                        <label for="phone-number">Contact Number *</label>
+                        <input type="tel" id="phone-number" placeholder="(000) 000-0000" name="phone_number" required>
+                    </div>
+                    
+                </div>
+                <div class="delivrey-group" style="margin-top:20px">
+                        
+                    <label for="address">Additional requests, messages or concerns? *</label>
+                    <textarea type="text" id="address" name="Address" placeholder="Type here..." rows="5"required></textarea>
+               
+                    </div>
+                      <div class="current-situation">
+            <p>What is your current situation? <span style="color: red;">*</span></p>
+            <label>
+                <input type="radio" name="situation" value="just-looking" style="width:20px; height:15px; color: green;">
+                I'm just looking
+            </label><br>
+    
+            <label>
+                <input type="radio" name="situation" value="ready-now" style="width:20px; height:15px; color: green;">
+                I am ready to order now
+            </label><br>
+    
+            <label>
+                <input type="radio" name="situation" value="ready-30-days" style="width:20px; height:15px; color: green;">
+                I will be ready to order within 30 days
+            </label><br>
+    
+            <label>
+                <input type="radio" name="situation" value="ready-90-days"style="width:20px; height:15px; color: green;">
+                I will be ready to order within 90 days
+            </label>
+        </div>
+                    <hr style="margin-bottom:10px">
+        
+                    <!-- Submit Button -->
+                    <button type="submit" class="submit-btn">Submit Quote            ></button>
+                </div>
+            </div>
+        </form>
+        
+    </div>
+
+
+
+
+
+   
+
+
+<!-- Footer Section -->
+ <footer>
+<div class="footer-banner">
+    <div class="overlay"></div>
+ <div class="footer-content">
+        <div class="footer-banner-text">
+        <h2>REGISTER YOUR INTEREST & DOWNLOAD OUR BROCHURE</h2>
+        <p>Portable Tiny Homes from $27,500</p>
+    </div>
+        <form class="registration-form">
+            <input type="text" placeholder="First name" required>
+            <input type="text" placeholder="Last name" required>
+            <input type="text" placeholder="Phone number" required>
+            <input type="email" placeholder="Email address" required>
+            <button type="button" class="submit-btn" onclick="window.location.href='https://elitenest.co/thank-you/'">ENQUIRE NOW ></button>
+        </form>
+        <div class="contact-info">
+            <div class="footer-logo" >
+                <img src="/EliteNest1/static/Images/Logo-white.svg" alt="logo"/>
+                <h4>Proudly BK SPOT LLC owned & operated.</h4>
+                 <p>© 2024 ALL RIGHTS RESERVED BY ELITE NEST.</p>
+           
+            </div>
+            
+            <div class="social-icons" >
+                <div class="contact">
+                    <p><strong>Phone:</strong> 5129617126</p>
+                <p><strong>Email:</strong> <span class="line-email">info@elitenest.co</span></p>
+                </div>
+                
+                <!-- Add your social media icons here -->
+                 <div class="media">
+                    <a href="https://www.tiktok.com/@elite.nest3?_t=8ooYmlF8SnD&_r=1"><i class='bx bxl-tiktok' ></i></a>
+                    <a href="https://www.instagram.com/elitenest_tinyhouses/"><i class='bx bxl-instagram'></i></a>
+                    <a href="https://www.threads.net/@elitenest_tinyhouses?xmt=AQGz3E2j5XIFyvIsXXUWwHFeS-oo5cXaP7LKVT5lBd0MbqA"> <i class="fa-brands fa-threads"></i></a>
+                    <a href="https://www.facebook.com/people/ELITE-NEST/61564014360618/"><i class='bx bxl-facebook'></i></a>
+                    <a href="https://www.youtube.com/@elitenest-s4w"><i class='bx bxl-youtube' ></i></a>
+                    <a href="https://www.pinterest.com/elitenest/_created/"><i class="fa-brands fa-pinterest"></i></a>
+
+                   
+                 </div>
+               
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</footer>
+{% comment %} <script>
+function updateRoofOptions(selectedSize) {
+    const roofCards = document.querySelectorAll('#roofCards .card');
+
+    roofCards.forEach(card => {
+        const roofTitle = card.querySelector('h3');
+        if (card.getAttribute('data-size').includes('Standard')) {
+            roofTitle.textContent = `${selectedSize} Standard Roof`;
+        } else if (card.getAttribute('data-size').includes('Upgraded')) {
+            roofTitle.textContent = `${selectedSize} Upgraded Roof`;
+        }
+    });
+}
+</script> {% endcomment %}
+<script>
+// Function to load the states from the JSON file and populate the dropdown
+async function loadStates() {
+    try {
+        const response = await fetch('/EliteNest1/static/states.json'); // Ensure this path is correct
+        const states = await response.json();
+        
+        const stateSelect = document.getElementById('state');
+        const stateNameInput = document.getElementById('state_name');
+
+        // Populate dropdown with states and prices
+        for (const [state, price] of Object.entries(states)) {
+            const option = document.createElement('option');
+            option.value = price; // Set delivery price as value
+            option.textContent = state; // Display state name
+            option.setAttribute('data-state-name', state); // Store state name in a data attribute
+            stateSelect.appendChild(option);
+        }
+
+        // Update hidden input with selected state name when state changes
+        stateSelect.addEventListener('change', function() {
+            const selectedOption = stateSelect.options[stateSelect.selectedIndex];
+            stateNameInput.value = selectedOption.getAttribute('data-state-name'); // Update hidden input with the state name
+        });
+    } catch (error) {
+        console.error('Error loading states:', error);
+    }
+}
+
+window.onload = function() {
+    loadStates();
+};
+
+// Function to calculate total price with delivery charges
+// function updateTotal() {
+//     let productTotalPrice = 0;
+
+//     // Calculate the product price for the selected floor plan
+//     let selectedFloor = document.querySelector('input[name="selected_floor"]:checked');
+//     if (selectedFloor) {
+//         let floorId = selectedFloor.value;
+//         let quantityInputFloor = document.querySelector(`select[name="quantities_${floorId}"]`);
+//         let floorPrice = parseFloat(selectedFloor.getAttribute('data-price'));
+//         let floorQuantity = parseInt(quantityInputFloor.value, 10);
+//         productTotalPrice += floorPrice * floorQuantity;
+//     }
+
+//     // Calculate the product price for the selected roof plan
+//     let selectedRoof = document.querySelector('input[name="selected_roof"]:checked');
+//     if (selectedRoof) {
+//         let roofId = selectedRoof.value;
+//         let quantityInputRoof = document.querySelector(`select[name="quantities_${roofId}"]`);
+//         let roofPrice = parseFloat(selectedRoof.getAttribute('data-price'));
+//         // let roofQuantity = parseInt(quantityInputRoof.value, 10);
+//       //  productTotalPrice += roofPrice * roofQuantity;
+//         productTotalPrice += roofPrice
+//     }
+//       // Calculate the product price for the selected Glass plan
+//       let selectedglass = document.querySelector('input[name="selected_glass"]:checked');
+//       if (selectedglass) {
+//           let glassId = selectedglass.value;
+//           let quantityInputGlass = document.querySelector(`select[name="quantities_${glassId}"]`);
+//           let glassPrice = parseFloat(selectedglass.getAttribute('data-price'));
+//           //let glassQuantity = parseInt(quantityInputGlass.value, 10);
+//           //productTotalPrice += glassPrice * glassQuantity;
+//           productTotalPrice += glassPrice
+//       }
+//          // Calculate the product price for the selected Veranda plan
+//          let selectedveranda = document.querySelector('input[name="selected_veranda"]:checked');
+//          if (selectedveranda) {
+//              let verandaId = selectedveranda.value;
+//              let quantityInputVeranda = document.querySelector(`select[name="quantities_${verandaId}"]`);
+//              let verandaPrice = parseFloat(selectedveranda.getAttribute('data-price'));
+//              //let verandaQuantity = parseInt(quantityInputVeranda.value, 10);
+//              //productTotalPrice += verandaPrice * verandaQuantity;
+//              productTotalPrice += verandaPrice 
+//          }
+
+//     // Add the delivery price based on selected state
+//     let stateSelect = document.getElementById('state');
+//     let deliveryPrice = parseFloat(stateSelect.value) || 0; // Get delivery price or default to 0
+
+//     // Calculate total price
+//     let totalPrice = productTotalPrice + deliveryPrice;
+
+//     // Update the HTML to show separate prices
+//     document.getElementById('productPrice').textContent = productTotalPrice.toLocaleString();  // Display product price
+//     document.getElementById('deliveryPrice').textContent = deliveryPrice.toLocaleString();      // Display delivery price
+//     document.getElementById('totalPrice').textContent = totalPrice.toLocaleString();            // Display total price
+// }
+
+// // Call loadStates when the page loads
+// window.onload = function() {
+//     loadStates();
+
+//     // Attach event listener to the radio buttons and quantity inputs
+//     let radiosFloor = document.querySelectorAll('input[name="selected_floor"]');
+//     radiosFloor.forEach(radio => {
+//         radio.addEventListener('change', updateTotal);
+//     });
+
+//     let radiosRoof = document.querySelectorAll('input[name="selected_roof"]');
+//     radiosRoof.forEach(radio => {
+//         radio.addEventListener('change', updateTotal);
+//     });
+//     let radiosGlass = document.querySelectorAll('input[name="selected_glass"]');
+//     radiosGlass.forEach(radio => {
+//         radio.addEventListener('change', updateTotal);
+//     });
+//     let radiosVeranda = document.querySelectorAll('input[name="selected_veranda"]');
+//     radiosVeranda.forEach(radio => {
+//         radio.addEventListener('change', updateTotal);
+//     });
+
+//     let quantityInputs = document.querySelectorAll('select[name^="quantities_"]');
+//     quantityInputs.forEach(input => {
+//         input.addEventListener('change', updateTotal);
+//     });
+// };
+</script>
+<script>
+let lastCheckedRadio = null;
+// Function to update roof options based on selected floor size
+function updateRoofOptions(selectedFloorSize) {
+   
+    const roofSection = document.getElementById('roof-section');
+    if (!roofSection) {
+        console.error('Element with ID "roof-section" not found.');
+        return;
+    }
+    const glassSection = document.getElementById('glass-section');
+    if (!glassSection) {
+        console.error('Element with ID "glass-section" not found.');
+        return;
+    }
+
+
+    // Ensure the roof section is always visible after a floor plan is selected
+    roofSection.style.display = 'block';
+    // Ensure the roof section is always visible after a floor plan is selected
+    glassSection.style.display = 'block';
+    console.log('this is roof section')
+    // Iterate over each subsection in the roof section
+    document.querySelectorAll('#roof-section .subsection').forEach(subsection => {
+        const cards = subsection.querySelectorAll('.card');
+        console.log(cards)
+        let anyCardVisible = false; // Track if any card is visible
+
+        // Loop through each card in the subsection
+        cards.forEach(card => {
+            const cardSize = card.getAttribute('data-size');
+
+            // Keep all cards with matching size visible, whether selected or not
+            if (cardSize === selectedFloorSize && lastCheckedRadio) {
+                card.style.display = 'block';  // Always show cards with matching size
+                anyCardVisible = true;         // Mark that we have visible cards
+            } else {
+                card.style.display = 'none';   // Hide cards with unmatched size
+            }
+        });
+
+        // Show the subsection only if it has visible cards
+        subsection.style.display = anyCardVisible ? 'block' : 'none';
+    });
+     console.log('exit from roof section')
+     // Iterate over each subsection in the glass section
+// Handle Glass Section
+    console.log('Processing glass section');
+    document.querySelectorAll('#glass-section .subsection').forEach(subsection => {
+        console.log('Entered glass subsection');
+        const cards = subsection.querySelectorAll('.card');
+        let anyCardVisible = false;
+
+        cards.forEach(card => {
+            const cardSize = card.getAttribute('data-size');
+            console.log('Glass Card Size:', cardSize, 'Selected Floor Size:', selectedFloorSize);
+            if (cardSize === selectedFloorSize && lastCheckedRadio) {
+                card.style.display = 'block';
+                anyCardVisible = true;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+
+        subsection.style.display = anyCardVisible ? 'block' : 'none';
+    });
+    }
+    
+   
+
+    console.log('Completed updateRoofOptions');
+// Function to ensure the roof section stays visible after roof selection
+function keepRoofSectionVisible() {
+    const roofSection = document.getElementById('roof-section');
+    if (roofSection) {
+        roofSection.style.display = 'block'; // Ensure the roof section is always visible
+
+        // Ensure all cards with matching size remain visible after a roof selection
+        document.querySelectorAll('#roof-section .subsection .card').forEach(card => {
+            const cardSize = card.getAttribute('data-size');
+            const selectedFloorSize = document.querySelector('input[name="selected_floor"]:checked').getAttribute('data-size');
+
+            // Keep showing all cards with matching size, regardless of selection
+            if (cardSize === selectedFloorSize) {
+                card.style.display = 'block';  // Keep all matching size cards visible
+            }
+        });
+    }
+}
+
+// Function to ensure the roof section stays visible after roof selection
+function keepGlassSectionVisible() {
+    const glassSection = document.getElementById('glass-section');
+    if (glassSection) {
+        glassSection.style.display = 'block'; // Ensure the glass section is always visible
+
+        // Ensure all cards with matching size remain visible after a glass selection
+        document.querySelectorAll('#glass-section .subsection .card').forEach(card => {
+            const cardSize = card.getAttribute('data-size');
+            const selectedFloorSize = document.querySelector('input[name="selected_floor"]:checked').getAttribute('data-size');
+            console.log('This is:',cardSize,selectedFloorSize)
+
+            // Show all matching size cards
+            if (cardSize === selectedFloorSize) {
+            	console.log('entered')
+                card.style.display = 'block';
+            }
+        });
+    }
+}
+
+
+// Event listener for floor plan selection
+document.addEventListener('DOMContentLoaded', function() {
+    // Floor plan radio buttons
+    document.querySelectorAll('input[name="selected_floor"]').forEach(radio => {
+        radio.addEventListener('change', function () {
+            const selectedSize = this.getAttribute('data-size');
+            updateRoofOptions(selectedSize);  // Update roof options based on selected floor size
+        });
+    });
+
+    // Roof plan radio buttons
+    document.querySelectorAll('input[name="selected_roof"]').forEach(radio => {
+        radio.addEventListener('change', function () {
+            keepRoofSectionVisible();  // Ensure the roof section and relevant cards remain visible after roof selection
+        });
+    });
+    // Roof plan radio buttons
+    document.querySelectorAll('input[name="selected_glass"]').forEach(radio => {
+        radio.addEventListener('change', function () {
+       	console.log('Glass Section Function')
+            keepGlassSectionVisible();  // Ensure the roof section and relevant cards remain visible after roof selection
+        });
+    });
+});
+
+function toggleRadio(radio) {
+    if (lastCheckedRadio === radio) {
+        radio.checked = false; // Uncheck the radio
+        lastCheckedRadio = null; // Reset the last checked to null
+    } else {
+        lastCheckedRadio = radio; // Set the current radio as last checked
+    }
+
+    // Get the selected floor size
+    const selectedFloorSize = radio.getAttribute('data-size');
+    
+    // Call updateRoofOptions with the floor size
+    updateRoofOptions(selectedFloorSize);
+    updateTotal();
+}
+function toggleRadio1(radio) {
+    if (lastCheckedRadio === radio) {
+        radio.checked = false; // Uncheck the radio
+        lastCheckedRadio = null; // Reset the last checked to null
+    } else {
+        lastCheckedRadio = radio; // Set the current radio as last checked
+    }
+    updateTotal();
+
+}
+
+</script>
+    <script>
+        const menuIcon = document.querySelector('.menu-icon');
+        const closeIcon = document.querySelector('.close-icon');
+        const navLinks = document.getElementById('nav-links');
+    
+        menuIcon.addEventListener('click', () => {
+            navLinks.classList.add('active');
+            menuIcon.style.display = 'none';
+            closeIcon.style.display = 'block';
+        });
+    
+        closeIcon.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+            menuIcon.style.display = 'block';
+            closeIcon.style.display = 'none';
+        });
+    </script>
+    
+    
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
+
+</body>
+</html>

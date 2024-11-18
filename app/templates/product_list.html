@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Product List{% endblock  %}
+
+
+
+{% block content  %}
+        <!-- ========================= Main ==================== -->
+        <div class="main">
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+
+                <div class="details">
+                    <div class="recentOrders">
+                       <div class="card-flex">
+                        <div class="cardHeader">
+                            <h2>Product List</h2>
+                        </div>
+                        <div class="add-product">
+                            <a href="{% url 'add_product' %}">
+                                <i class="fa-solid fa-plus"></i>
+                                <span>ADD</span>
+                            </a>
+                        </div>
+                    </div>
+                        <div class="details-table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Description</td>
+                                    <td>Price</td>
+                                    <td>Section</td>
+                                    <td>Status</td>
+                                </tr>
+                            </thead>
+    
+                            <tbody>
+                                {% for product in products %}
+                                <tr>
+                                    <td>{{ product.name }}</td>
+                                    <td>{{product.description}}</td>
+                                    <td>{{product.price}}</td>
+                                    <td>{{product.section}}</td>
+
+                                    <td><a href="{% url 'edit_product' product.id %}"><i class="fa-regular fa-pen-to-square"></i></a> |
+                                        <a href="#" class="delete-btn" data-product-id="{{ product.id }}" data-product-name="{{ product.name }}">
+                                            <i class="fa-solid fa-trash-can"></i>
+                                        </a>
+                                        </td>    
+                                    
+                                    </tr>
+    
+                                {% endfor %}
+                            </tbody>
+    
+    
+                           
+                        </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div id="deleteModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <h2>Confirm Delete</h2>
+                <p>Are you sure you want to delete <span id="productName"></span>?</p>
+            </div>
+            <div class="modal-actions">
+                <form id="deleteForm" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-confirm-delete">Yes, Delete</button>
+                    <button type="button" class="btn-cancel-delete" onclick="closeModal()">Cancel</button>
+                </form>
+            </div>
+        </div>
+{% endblock %}
+{% block custome_js %}
+      <script>
+        let list = document.querySelectorAll(".navigation li");
+
+function activeLink() {
+  list.forEach((item) => {
+    item.classList.remove("hovered");
+  });
+  this.classList.add("hovered");
+}
+
+list.forEach((item) => item.addEventListener("mouseover", activeLink));
+
+// Menu Toggle
+let toggle = document.querySelector(".toggle");
+let navigation = document.querySelector(".navigation");
+let main = document.querySelector(".main");
+
+toggle.onclick = function () {
+  navigation.classList.toggle("active");
+  main.classList.toggle("active");
+};
+
+      </script>
+    
+        <!-- ====== ionicons ======= -->
+        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>  
+        
+        
+
+        <script>
+            document.querySelectorAll('.delete-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-product-id');
+                    const productName = this.getAttribute('data-product-name');
+        
+                    // Set the product name in the modal
+                    document.getElementById('productName').textContent = productName;
+        
+                    // Set the form action for the product to be deleted
+                    const form = document.getElementById('deleteForm');
+                    form.action = `/delete-product/${productId}/`;
+        
+                    // Show the modal
+                    document.getElementById('deleteModal').style.display = 'block';
+                });
+            });
+        
+            function closeModal() {
+                document.getElementById('deleteModal').style.display = 'none';
+            }
+        </script>
+        {% endblock  %}
